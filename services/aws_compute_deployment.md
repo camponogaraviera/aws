@@ -1,32 +1,90 @@
 <div align='center'>
-  <h1>Compute</h1>
+  <h1>Compute & Deployment</h1>
 </div>
 
 # Table of Contents
+ 
+- **Infrastructure and PaaS (Platform as a Service)**
+  - [Amazon Elastic Compute Cloud (EC2)](https://aws.amazon.com/pt/ec2/)
+    - About 
+    - Deployment 
+  - [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk)
+    - About 
+    - Deployment 
+- **Serverless**
+  - [AWS Fargate](https://aws.amazon.com/fargate/)
+    - About 
+    - Deployment 
+  - [AWS Lambda](https://aws.amazon.com/pm/lambda)
+    - About 
+    - Use Cases and Best Practices
+    - Scaling
+    - Deployment 
+  - [Serverless Framework](https://www.serverless.com/)
+    - About
+    - Install NodeJs
+    - Install Serverless
+    - Create IAM Roles
+    - Create a New Serverless Project
+    - Deploy Local Changes to AWS
+    - Invoking a Function and Fetching Logs
+    - Destroying The Server
+    - The serverless.yml file
+ 
 
-- [Amazon Elastic Compute Cloud (EC2)](#amazon-elastic-compute-cloud-ec2)
-- [AWS Lambda](#aws-lambda)
-  - [Serverless Framework](#serverless-framework)
+# Infrastructure and PaaS (Platform as a Service)
 
-# [Amazon Elastic Compute Cloud (EC2)](https://aws.amazon.com/pt/ec2/)
+## [Amazon Elastic Compute Cloud (EC2)](https://aws.amazon.com/pt/ec2/)
+
+### About
 
 EC2 is the Enterprise level for systems that will likely scale with multiple web servers. EC2 offers virtual machines in the cloud. Each EC2 instance is a virtual machine that shares the RAM memory of a single physical machine that can run multiple sandboxed virtual machines. EC2 instances can be used to manage docker containers.
 
+### Deployment 
+
+Deploy your server on an EC2 instance if you prefer to manage the infrastructure yourself. Containerization is optional.
+
 ---
 
-# [AWS Lambda](https://aws.amazon.com/pm/lambda)
+## [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk)
+
+### About
+
+"Elastic Beanstalk is a service for deploying and scaling web applications and services." —AWS.
+
+### Deployment 
+
+Use Elastic Beanstalk to simplify infrastructure management and deploy long-running containerized or non-containerized applications. AWS manages the underlying EC2 instances, but it is not fully serverless.
+
+---
+
+# Serverless
+
+## [AWS Fargate](https://aws.amazon.com/fargate/)
+
+### About
+
+"AWS Fargate is a serverless, pay-as-you-go compute engine that lets you focus on building applications without managing servers." —AWS.
+
+### Deployment 
+
+Use Docker to containerize Express or Apollo servers for ECS (Elastic Container Service) or EKS (Elastic Kubernetes Service), and deploy them using AWS Fargate. There is no need to manage EC2 instances, AWS takes care of the underlying infrastructure (VMs, scaling, etc).
+
+---
+
+## [AWS Lambda](https://aws.amazon.com/pm/lambda)
+
+### About
 
 "Compute service that runs your code in response to events and automatically manages the compute resources." —[AWS](https://aws.amazon.com/pm/lambda). 
 
-Unlike AWS EC2, which is maintained by AWS and the user, AWS Lambda is completely serverless (maintained by AWS). This service allows users to run their functions/code snippets (in JavaScript, Java, or Python) on the cloud. 
-
-Lambda triggers are then set up to watch for events and invoke/execute a Lambda function when an event occurs. This function can return a value, write/read and modify data of services such as S3 and DynamoDB, or connect to other services such as API Gateway, Cognito Sync (mobile), Kinesis, SNS, CodeCommit, CloudWatch Events/Logs, Alexa Skills/Smart Home, AWS IoT, CloudFront, and others.
+Unlike AWS EC2, which is maintained by AWS and the user, AWS Lambda is completely serverless (maintained by AWS). This service allows users to run their functions/code snippets (in JavaScript, Java, or Python) on the cloud. Lambda triggers are then set up to watch for events and invoke/execute a Lambda function when an event occurs. This function can return a value, write/read and modify data of services such as S3 and DynamoDB, or connect to other services such as API Gateway, Cognito Sync (mobile), Kinesis, SNS, CodeCommit, CloudWatch Events/Logs, Alexa Skills/Smart Home, AWS IoT, CloudFront, and others.
 
 - Events: an event is what triggers the execution of a Lambda function. The event object [is a JSON-formatted document that contains data for a Lambda function to process. The Lambda runtime converts the event to an object and passes it to your function code](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html#gettingstarted-concepts-event). Examples of events are: API Gateway requests, S3 object uploads, and DynamoDB table updates. 
 
 - [Triggers](https://docs.aws.amazon.com/lambda/latest/dg/gettingstarted-concepts.html#gettingstarted-concepts-trigger): a trigger is a specific configuration or rule that define when a Lambda function should be invoked/executed. Triggers are defined and configured within the event source service, such as API Gateway, S3, DynamoDB, etc.
 
-## Use Cases and Best Practices 
+### Use Cases and Best Practices 
 
 As a best practice, a Lambda function should be designed to do a single task only:
 
@@ -36,17 +94,21 @@ As a best practice, a Lambda function should be designed to do a single task onl
 - Creating a thumbnail of an image.
 - Communication between the API and other Amazon services (S3, Kinesis, SNS, Step Functions, Bedrock...).
  
-## Scaling
+### Scaling
 
 ["By default, Lambda provides your account with a total concurrency limit of 1,000 concurrent executions across all functions in an AWS Region."](https://docs.aws.amazon.com/lambda/latest/dg/lambda-concurrency.html)
 
+### Deployment 
+
+Use AWS Lambda with apollo-server-lambda and API Gateway for a fully serverless architecture. Integrate your Express or Apollo server with AWS Lambda using said package. Connect API Gateway to your Lambda function to handle incoming GraphQL requests and route them to your server. Suitable for lightweight applications within Lambda's constraints (15-minute timeout, memory limits) that do not require a long-running service.
+
 ---
 
-# Serverless Framework 
+# [Serverless Framework](https://www.serverless.com/) 
 
 ## About
 
-The serverless framework is used to create, deploy, manage and debug AWS Lambda functions from the command line. It uses AWS [CloudFormation](https://aws.amazon.com/cloudformation/) under the hood to manage the deployment of resources. It can be integrated into CI/CD pipelines.
+The serverless framework is used to create, deploy, manage, and debug AWS Lambda functions from the command line. It uses AWS [CloudFormation](https://aws.amazon.com/cloudformation/) under the hood to manage the deployment of resources. It can be integrated into CI/CD pipelines.
 
 ## Install NodeJs 
 
@@ -233,3 +295,4 @@ export const myHandler = async (event, context) => {
   }
 };
 ```
+

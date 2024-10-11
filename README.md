@@ -16,15 +16,34 @@
 
 ## 3. Backend
 
-### 3.1 [Compute](services/aws_compute.md)
+### 3.1 [Compute & Deployment](services/aws_compute_deployment.md)
 
-- Infrastructure and PaaS (Platform as a Service):
+- **Infrastructure and PaaS (Platform as a Service)**
   - [Amazon Elastic Compute Cloud (EC2)](https://aws.amazon.com/pt/ec2/)
+    - About 
+    - Deployment 
   - [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk)
-- Serverless:
-  - [AWS Lambda](https://aws.amazon.com/pm/lambda)
-    - [Serverless Framework](https://www.serverless.com/)
+    - About 
+    - Deployment 
+- **Serverless**
   - [AWS Fargate](https://aws.amazon.com/fargate/)
+    - About 
+    - Deployment 
+  - [AWS Lambda](https://aws.amazon.com/pm/lambda)
+    - About 
+    - Use Cases and Best Practices
+    - Scaling
+    - Deployment 
+  - [Serverless Framework](https://www.serverless.com/)
+    - About
+    - Install NodeJs
+    - Install Serverless
+    - Create IAM Roles
+    - Create a New Serverless Project
+    - Deploy Local Changes to AWS
+    - Invoking a Function and Fetching Logs
+    - Destroying The Server
+    - The serverless.yml file
     
 ---
 
