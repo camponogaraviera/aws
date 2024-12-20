@@ -14,6 +14,8 @@ Unlike `registro.br`, which is a management organization for `.br` domains (the 
 
 Use AWS Certificate Manager (ACM) to provision, manage, and deploy public and private SSL/TLS certificates.
 
+Note: HTTPS relies on the TLS protocol (previously on SSL which is now deprecated) to establish encrypted communication between the client and the server.
+
 - Public Certificate: This certificate is issued by Amazon's public certificate authority (CA) and is recognized by browsers, making it the standard choice for securing public-facing websites. Public certificates issued by AWS ACM are intended for use exclusively with AWS services (CloudFront, Elastic Load Balancing, and API Gateway). ACM does not provide access nor allow exporting the private key of publicly trusted certificates. However, you can export the public certificate and its certificate chain (the root and intermediate CAs) using the `GetCertificate API`. Public certificates are free.
 
 - Private Certificate: This option is for internal or private applications where you control the trust settings (e.g., within a corporate network), and it requires setting up a private certificate authority. These certificates are typically not recognized by browsers for public websites and wouldn't automatically show the padlock icon next to the domain name of your website. Private certificates are paid.
