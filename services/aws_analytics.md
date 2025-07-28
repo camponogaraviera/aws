@@ -1,0 +1,11 @@
+<div align='center'>
+  <h1>Visualization</h1>
+</div>
+
+# [QuickSight](https://aws.amazon.com/quicksight)
+
+Amazon QuickSight is a cloud-powered business intelligence (BI) tool designed to help users quickly gain insights from a wide variety of data sources, including AWS services such as S3, Redshift, and RDS, as well as third-party databases and SaaS applications. It enables organizations to easily create and publish interactive dashboards and visualizations from their data.
+
+Use cases:
+
+- [Perform multi-cloud analytics using Amazon QuickSight, Amazon Athena Federated Query, and Microsoft Azure Synapse](https://aws.amazon.com/blogs/business-intelligence/perform-multi-cloud-analytics-using-amazon-quicksight-amazon-athena-federated-query-and-microsoft-azure-synapse/).
