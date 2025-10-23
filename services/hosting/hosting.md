@@ -9,7 +9,7 @@
 - [Amazon S3](#amazon-s3)
 - [AWS Amplify](#aws-amplify)
   - Deployment
-- [Amazon CloudFront + Amazon S3](#cloudfront--s3)
+- [Amazon CloudFront + Amazon S3](#amazon-cloudfront--amazon-s3)
 
 # Hosting vs Deployment
 
