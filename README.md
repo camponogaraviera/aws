@@ -5,21 +5,21 @@
 # Table of Contents
 
 - [1. Frontend & Hosting](#hosting)
-  - 1.1 Hosting Options
+  - Hosting Options
     - Hosting vs Deployment
     - Amazon S3
     - AWS Amplify
     - Amazon CloudFront + Amazon S3
-  - 1.2 Content Delivery Network (CDN)
+  - Content Delivery Network (CDN)
     - Amazon CloudFront
 - [2. Backend & Deployment](#backend)
-  - 2.1 When to Use a Backend?
-  - 2.2 About Deployment
-  - 2.3 Infrastructure as a Service (IaaS)
+  - When to Use a Backend?
+  - About Deployment
+  - Infrastructure as a Service (IaaS)
     - Amazon Elastic Compute Cloud (EC2)
-  - 2.4 Platform-as-a-Service (PaaS)
+  - Platform-as-a-Service (PaaS)
     - AWS Elastic Beanstalk
-  - 2.5 Serverless Deployment
+  - Serverless Deployment
     - AWS Lambda
     - AWS Fargate
     - AWS App Runner
@@ -91,14 +91,14 @@
 <details>
   <summary><h1 id="hosting">1. Frontend & Hosting</h1></summary>
 
-## 1.1 [Hosting Options](services/hosting/hosting.md)
+## [Hosting Options](services/hosting/hosting.md)
 
 - Hosting vs Deployment
 - Amazon S3
 - AWS Amplify
 - Amazon CloudFront + Amazon S3
 
-## 1.2 Content Delivery Network (CDN)
+## Content Delivery Network (CDN)
 
 - [Amazon CloudFront](services/hosting/cloudfront.md)
 
@@ -111,23 +111,23 @@
 <details>
   <summary><h1 id="backend"> 2. Backend & Deployment </h1></summary>
 
-## 2.1 [When to Use a Backend?](services/deployment/when_backend.md)
+## [When to Use a Backend?](services/deployment/when_backend.md)
 
-## 2.2 [About Deployment](services/deployment/about_deployment.md)
+## [About Deployment](services/deployment/about_deployment.md)
 
-## 2.3 Infrastructure as a Service (IaaS)
+## Infrastructure as a Service (IaaS)
 
 - [Amazon Elastic Compute Cloud (EC2)](services/deployment/ec2.md)
   - About
   - Deployment
 
-## 2.4 Platform-as-a-Service (PaaS)
+## Platform-as-a-Service (PaaS)
 
 - [AWS Elastic Beanstalk](services/deployment/beanstalk.md)
   - About
   - Deployment
 
-## 2.5 Serverless Deployment
+## Serverless Deployment
 
 - [AWS Lambda](services/deployment/lambda.md)
 - [AWS Fargate](services/deployment/fargate.md)
