@@ -6,8 +6,8 @@
 # Table of Contents
 
 - [Hosting vs Deployment](#hosting-vs-deployment)
-- [Amazon S3](#s3)
-- [AWS Amplify](#amplify)
+- [Amazon S3](#amazon-s3)
+- [AWS Amplify](#aws-amplify)
   - Deployment
 - [Amazon CloudFront + Amazon S3](#cloudfront--s3)
 
