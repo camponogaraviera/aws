@@ -21,11 +21,11 @@
 
 ---
 
-# 3) Which AWS services should be used to design a chat app with 1-10k concurrent users, low throughput (10 MB/second), low-frequency (delay of 100ms-2s), and real-time synchronization? 
+# 3) Which AWS services should be used to design a chat app with 1-10k concurrent users, low throughput (10 MB/second), and near-real-time synchronization (delay of 100-300ms).
 
 **Answer**:
  
-- Use `AWS API Gateway WebSockets` or `AWS AppSync` to implement a WebSocket API for low-frequency, real-time communication (send/receive messages), and events (typing receipt, presence).
+- Use `AWS API Gateway WebSockets` or `AWS AppSync` to implement a WebSocket API for near-real-time communication (send/receive messages), and events (typing receipt, presence).
 - Use `AWS AppSync` to implement a GraphQL API that can handle CRUD operations (e.g., delete a chat, create a group, fetch profile, etc.). 
 - Use [AppSync subscriptions](https://docs.aws.amazon.com/appsync/latest/devguide/aws-appsync-real-time-data.html) for real-time fan-out (live application updates, push notifications, etc.)
 
