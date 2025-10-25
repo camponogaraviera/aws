@@ -21,7 +21,7 @@
 
 ---
 
-# 3) Which AWS services should be used to design a chat app with 1-10k concurrent users, low throughput (10 MB/second), and near-real-time synchronization (delay of 100-300ms).
+# 3) Which AWS services should be used to design a chat app with 1-10k concurrent users, low throughput (10 MB/second), and near-real-time synchronization?
 
 **Answer**:
  
@@ -36,7 +36,7 @@
       
 ---
 
-# 4) Which AWS services should be used for general-purpose, long-running compute that exceed AWS Lambda's 15-minute timeout (e.g., video processing, ML training and inference)?
+# 4) Which AWS services should be used for general-purpose, long-running compute that exceed AWS Lambda's 15-minute timeout (e.g., video processing, ML training, and inference)?
 
 **Answer**:
 
@@ -55,7 +55,7 @@
 
 ---
 
-# 6) Which AWS services should be used to design an app that requires 1M+ concurrent connections (e.g., chat apps, multiplayer games, etc.)?
+# 6) Which AWS services should be used to design an app that requires 1M+ concurrent connections (e.g., chat apps, multiplayer games, etc.) and high-throughput?
 
 **Answer:**
 
