@@ -76,11 +76,11 @@
 
 **Answer:**
 
-- Use UDP or TCP sockets directly to connect clients and process game state updates. If the game runs in a browser, implement a custom WebSocket server using either `uWebSockets.js`, `Colyseus`, or `Socket.IO`. Deploy the containerized application directly on stateless servers/nodes (e.g., `EC2 instances`) or managed by ECS/EKS as the orchestration layer.
+- Use UDP or TCP sockets directly to connect clients and process game state updates. If the game run in a browser, implement a custom WebSocket server using either `uWebSockets.js`, `Colyseus`, or `Socket.IO`. Deploy the containerized application directly on stateless servers/nodes (e.g., `EC2 instances`) or managed by ECS/EKS as the orchestration layer.
 
 - Set up NLB + EC2 to handle millions of long-lived, concurrent, and persistent TCP/UDP or WebSocket connections. EC2 keep in-memory state, and maintain persistent connections (the player keeps the same TCP/WebSocket connection open).
 
-- Containerize the real-time gameplay loop with persistent connections and run the image on EC2 via ECS/EKS. Alternatively, use [Amazon GameLift](https://aws.amazon.com/gamelift/).
+- Containerize the file with the real-time gameplay loop, push the docker image to ECR, and run it on EC2 via ECS/EKS. Alternatively, use [Amazon GameLift](https://aws.amazon.com/gamelift/).
 
 - The communication API for non-realtime workload (authentication/login, player profile, leaderboards, game history, inventory, etc.) can be a serverless `RESTful API` implemented with [API Gateway](https://aws.amazon.com/api-gateway/) + [AWS Lambda](https://aws.amazon.com/pm/lambda).
 
@@ -110,7 +110,7 @@
 
 - The frontend can always be hosted (stored on S3 and served through CloudFront) using Amplify. The backend of lightweight apps can be deployed with Amplify, which uses **CloudFormation** under the hood to integrate different backend services. However, the backend of long-running apps should be deployed on EC2 instances (directly or via Fargate).
 
-If you require a stateless request-response workload, API Gateway + Lambda works great. However, it is not a suitable choice for building APIs that require low-latency (Lambda has cold start) and persistent (long-lived) connections, because of their timeout constraints: [~29 seconds timeout for API Gateway](https://aws.amazon.com/tw/about-aws/whats-new/2024/06/amazon-api-gateway-integration-timeout-limit-29-seconds/), and [15 minutes timeout for Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html). For workloads that require persistent connections, low-latency stateful communication, or continuous streaming, Express.js is a better architectural fit.
+- If a stateless request-response workload is required, API Gateway + Lambda works fine. However, it is not a suitable choice for building APIs that require low-latency (Lambda has cold start) and persistent (long-lived) connections, because of their timeout constraints: [~29 seconds timeout for API Gateway](https://aws.amazon.com/tw/about-aws/whats-new/2024/06/amazon-api-gateway-integration-timeout-limit-29-seconds/), and [15 minutes timeout for Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html). For workloads that require persistent connections, low-latency stateful communication, or continuous streaming, Express.js is a better architectural fit.
 
 - API Gateway WebSockets does not offer high-throughput connections, has a Max of 2 hours duration per connection (not persistent), and a default (can be extended) limit of 10k concurrent connections per account, per region.
 
