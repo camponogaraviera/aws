@@ -41,7 +41,9 @@
 **Answer**:
 
 - Use [Amazon EC2](https://aws.amazon.com/ec2) instances to deploy custom long-running functions.
+
 - Fargate is not suitable for LLM training because it does not support GPU instances. EC2 instances must be manually configured instead.
+
 - AWS Lambda can still be used to initiate or coordinate these jobs, but it is not suitable for executing them directly if they are long-running.
   
 ---
@@ -56,15 +58,17 @@
 
 ---
 
-# 6) Which AWS services should be used to design an app that requires 1M+ concurrent connections (e.g., chat apps, multiplayer games, etc.) and high throughput?
+# 6) Which AWS services should be used to design an app that requires 1M+ long-lived concurrent connections (e.g., chat apps, multiplayer games, etc.) and high throughput?
 
 **Answer:**
 
-- For 1M+ long-lived concurrent connections and high throughput (millions of requests per second), set up a [Network Load Balancer (NLB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html) to distribute TCP traffic to backend workloads (such as containers running in ECS or EKS, or applications on EC2 instances). An [Application Load Balancer (ALB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html) also supports WebSockets and adds Layer 7 features like routing and WAF, but NLB generally scales better for extreme concurrency and throughput.
+- For 1M+ long-lived concurrent connections and high throughput (millions of requests per second), set up a [Network Load Balancer (NLB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/introduction.html) that operates at the transport layer 4 (TCP/UDP) to distribute TCP traffic to backend workloads (such as containers running on EC2 instances with ECS/EKS as the orchestration layer), then possibly an [Application Load Balancer (ALB)](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/introduction.html) if application Layer 7 features are required further downstream (e.g., HTTP routing and WAF). 
+
+- Usually, NLB pair with WebSockets and streaming, while ALB pair with REST + WAF. NLB is protocol agnostic, i.e., it does not interpret, parse, or modify application-layer protocols, it only forwards raw transport-layer traffic. It only looks at source/destination IP and port and does not care if bytes are HTTP requests, WebSocket frames, TLS, or raw binary.
 
 - For large-scale workloads requiring millions of concurrent connections, configure the Network Load Balancer to use the [IP target type](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#target-type) instead of the [instance target type](https://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html#target-type). This enables more granular load balancing across containerized services or multiple Elastic Network Interface (ENI) backends, improving scalability and connection distribution.
   
-- If using WebSocket, implement a custom WebSocket API with either `uWebSockets.js`, `Colyseus`, or `Socket.IO`, instead of using the [API Gateway WebSocket API](https://docs.aws.amazon.com/zh_tw/apigateway/latest/developerguide/apigateway-websocket-api.html) (see the [notes section](#notes)).
+- If WebSocket is required, implement a custom WebSocket API with either `uWebSockets.js`, `Colyseus`, or `Socket.IO`, instead of using [API Gateway WebSocket API](https://docs.aws.amazon.com/zh_tw/apigateway/latest/developerguide/apigateway-websocket-api.html) (see the [notes section](#notes)).
 
 ---
 
@@ -72,11 +76,13 @@
 
 **Answer:**
 
-- Use [Amazon GameLift](https://aws.amazon.com/gamelift/) to handle the real-time gameplay loop with persistent connections. Alternatively, build a custom WebSocket server using either `uWebSockets.js`, `Colyseus`, or `Socket.IO`.
+- Use UDP or TCP sockets directly to connect clients and process game state updates. If the game runs in a browser, implement a custom WebSocket server using either `uWebSockets.js`, `Colyseus`, or `Socket.IO`. Deploy the containerized application directly on stateless servers/nodes (e.g., `EC2 instances`) or managed by ECS/EKS as the orchestration layer.
 
-- The communication API (for non-game logic: authentication, player profile, leaderboards, game history, inventory, etc.) can be a serverless `RESTful API` implemented with [API Gateway](https://aws.amazon.com/api-gateway/) + [AWS Lambda](https://aws.amazon.com/pm/lambda).
- 
-- If using a custom WebSocket, deploy the containerized application directly on stateless servers/nodes (e.g., `EC2 instances`), or use [AWS Fargate](https://aws.amazon.com/fargate/) to run containers managed by ECS/EKS.
+- Set up NLB + EC2 to handle millions of long-lived, concurrent, and persistent TCP/UDP or WebSocket connections. EC2 keep in-memory state, and maintain persistent connections (the player keeps the same TCP/WebSocket connection open).
+
+- Containerize the real-time gameplay loop with persistent connections and run the image on EC2 via ECS/EKS. Alternatively, use [Amazon GameLift](https://aws.amazon.com/gamelift/).
+
+- The communication API for non-realtime workload (authentication/login, player profile, leaderboards, game history, inventory, etc.) can be a serverless `RESTful API` implemented with [API Gateway](https://aws.amazon.com/api-gateway/) + [AWS Lambda](https://aws.amazon.com/pm/lambda).
 
 ---
 
@@ -85,9 +91,7 @@
 **Answer:**
 
 - For real-time, audio/video communication, use [Amazon Chime](https://aws.amazon.com/chime/). The SDK provides a WebRTC under the hood (which maintains a persistent connection), includes built-in network address translation (NAT) using the ICE framework, and does not require users to manually set up STUN or TURN servers.
-
-- The communication API (create meeting, add/delete attendees, etc.) can be a serverless `RESTful API` implemented with [API Gateway](https://aws.amazon.com/api-gateway/) + [AWS Lambda](https://aws.amazon.com/pm/lambda).
- 
+- The communication API (create meeting, add/delete attendees, etc.) can be a serverless `RESTful API` implemented with [API Gateway](https://aws.amazon.com/api-gateway/) + [AWS Lambda](https://aws.amazon.com/pm/lambda). 
 - The frontend can be hosted on Amplify, while the backend can be deployed on Elastic Beanstalk (monolithic) or Fargate through ECS/EKS (microservices).
 
 ---
@@ -106,13 +110,9 @@
 
 - The frontend can always be hosted (stored on S3 and served through CloudFront) using Amplify. The backend of lightweight apps can be deployed with Amplify, which uses **CloudFormation** under the hood to integrate different backend services. However, the backend of long-running apps should be deployed on EC2 instances (directly or via Fargate).
 
-- AWS API Gateway + Lambda is not a suitable choice for building APIs that require persistent connections (stateful servers), because of their timeout constraints: [~29 seconds timeout for API Gateway](https://aws.amazon.com/tw/about-aws/whats-new/2024/06/amazon-api-gateway-integration-timeout-limit-29-seconds/), and [15 minutes timeout for AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html).
+If you require a stateless request-response workload, API Gateway + Lambda works great. However, it is not a suitable choice for building APIs that require low-latency (Lambda has cold start) and persistent (long-lived) connections, because of their timeout constraints: [~29 seconds timeout for API Gateway](https://aws.amazon.com/tw/about-aws/whats-new/2024/06/amazon-api-gateway-integration-timeout-limit-29-seconds/), and [15 minutes timeout for Lambda](https://docs.aws.amazon.com/lambda/latest/dg/configuration-timeout.html). For workloads that require persistent connections, low-latency stateful communication, or continuous streaming, Express.js is a better architectural fit.
 
 - API Gateway WebSockets does not offer high-throughput connections, has a Max of 2 hours duration per connection (not persistent), and a default (can be extended) limit of 10k concurrent connections per account, per region.
-
-- If you just need a stateless request/response, API Gateway + Lambda works great.
-
-- If you need persistent connections, low-latency stateful communication, or streaming, Express.js (or another long-running server) is a suitable choice.
 
 - Fan-In: number of components that call into a service.
 
