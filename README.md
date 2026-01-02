@@ -336,7 +336,7 @@
 
 <!-- #region Interview Preparation -->
 <details>
-  <summary><h1 id="interview">18. Interview Questions</h1></summary>
+  <summary><h1 id="interview">18. Interview Preparation</h1></summary>
 
 - [Interview Question](interview_prep/README.md)
 
