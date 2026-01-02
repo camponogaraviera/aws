@@ -84,7 +84,7 @@
   - Amazon Chime SDK
   - On-demand Streaming AWS Pipeline
   - Live Streaming AWS Pipeline
-- [18. Interview Questions](#interview)
+- [18. Interview Preparation](#interview)
 - [References](#references)
 
 <!-- #region Frontend & Hosting -->
@@ -334,11 +334,11 @@
 
 ---
 
-<!-- #region Interview Questions -->
+<!-- #region Interview Preparation -->
 <details>
   <summary><h1 id="interview">18. Interview Questions</h1></summary>
 
-- [Interview Questions](interview_prep/README.md)
+- [Interview Question](interview_prep/README.md)
 
 </details>
 <!-- #endregion -->
