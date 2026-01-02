@@ -338,7 +338,7 @@
 <details>
   <summary><h1 id="interview">18. Interview Preparation</h1></summary>
 
-- [Interview Question](interview_prep/README.md)
+- [Interview Questions](interview_prep/README.md)
 
 </details>
 <!-- #endregion -->
