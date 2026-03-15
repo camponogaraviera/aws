@@ -6,6 +6,7 @@
 # Table of Contents
 
 - [About](#about)
+- [Typical AWS Event-Driven Architecture](#typical-aws-event-driven-architecture)
 
 ---
 
