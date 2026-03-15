@@ -42,7 +42,7 @@ SNS (Notification Service)
 
 # Order Processing at Scale
 
-Order processing is built using an event-driven architecture. The Order Service stores the order and emits an OrderCreated event through EventBridge. Downstream services like Payment, Inventory, Fraud Detection, and Shipping consume events asynchronously through queues. Each service updates its own database and publishes new events such as PaymentCompleted or ShipmentCreated. SQS provides buffering and retries, DynamoDB stores order state, and SNS handles notifications. This architecture allows independent scaling, fault isolation, and high throughput.
+Order processing is built using an event-driven architecture. The Order Service stores the order and emits an `OrderCreated` event through EventBridge. Downstream services like Payment, Inventory, Fraud Detection, and Shipping consume events asynchronously through queues. Each service updates its own database and publishes new events such as `PaymentCompleted` or `ShipmentCreated`. SQS provides buffering and retries, DynamoDB stores order state, and SNS handles notifications. This architecture allows independent scaling, fault isolation, and high throughput.
 
 
 ```bash
