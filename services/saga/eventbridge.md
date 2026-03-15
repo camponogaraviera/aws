@@ -48,24 +48,24 @@ Order processing is built using an event-driven architecture. The Order Service 
 ```bash
                          Client
                            │
-            API Gateway (Load Balancer..)
+              API Gateway (Load Balancer..)
                            │
-               Lambda (Order Service)
+                 Lambda (Order Service)
                            │
-                DynamoDB (Order State)
+                 DynamoDB (Order State)
                            │
-                  EventBridge Bus
-                           │ ┌───────────────────────┼────────────────┐
-   │                       │                │
-Payment Service         Inventory       Fraud
-   │                       │                │
-PaymentCompleted   InventoryReserved           FraudCheck
-          │                │
-          └──────────────────────┬─────────────┘
+                     EventBridge Bus
+    ───────────────────────────────
+   │                      │                           │
+Payment Service        Inventory                     Fraud
+   │                      │                           │
+PaymentCompleted   InventoryReserved              FraudCheck
+   │                      │                           │
+    ───────────────────────────────
                            │
                     Shipping Service
                            │
                     ShipmentCreated
                            │
-                 Notification Service
+                  Notification Service
 ```
