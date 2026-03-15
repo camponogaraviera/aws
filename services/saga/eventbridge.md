@@ -55,18 +55,17 @@ Order processing is built using an event-driven architecture. The Order Service 
                 DynamoDB (Order State)
                            │
                   EventBridge Bus
-                           │
-   ┌───────────────┼────────────────┐
-   │               │                │
+                           │ ┌───────────────────────┼────────────────┐
+   │                       │                │
 Payment Service  Inventory       Fraud
-   │               │                │
+   │                       │                │
 PaymentCompleted InventoryReserved FraudCheck
-          │            │
-          └───────┬────┘
-                  │
-            Shipping Service
-                  │
-             ShipmentCreated
-                  │
-          Notification Service
+          │                │
+          └─────────────────────┬────┘
+                           │
+                    Shipping Service
+                           │
+                    ShipmentCreated
+                           │
+                 Notification Service
 ```
