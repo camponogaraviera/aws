@@ -56,13 +56,17 @@ Order processing is built using an event-driven architecture. The Order Service 
                            │
                   EventBridge Bus
                            │
-        ┌──────────────────┼──────────────────┐
-        │                  │                  │
-      Payment          Inventory           Fraud
-        │                  │                  │
- PaymentCompleted   InventoryReserved   FraudCheck
-        │
-   ShipmentCreated
-        │
- Notification Service
+   ┌───────────────┼────────────────┐
+   │               │                │
+Payment Service  Inventory       Fraud
+   │               │                │
+PaymentCompleted InventoryReserved FraudCheck
+          │            │
+          └───────┬────┘
+                  │
+            Shipping Service
+                  │
+             ShipmentCreated
+                  │
+          Notification Service
 ```
