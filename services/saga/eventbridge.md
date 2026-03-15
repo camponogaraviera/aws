@@ -22,9 +22,9 @@ It is suitable to decouple microservices (see [Choreography-based Saga](https://
 In AWS, event-driven systems are typically built using Lambda services as event producers and consumers, EventBridge as the event bus, SNS for notifications, and SQS for asynchronous processing. A microservice publishes an event such as `OrderCreated`, which multiple downstream services like payment, inventory, and shipping can consume independently.
 
 ```bash
-User Action
+User Request 
     ↓
-API Gateway
+API Gateway (Load Balancer)
     ↓
 Lambda (Producer)
     ↓
@@ -48,27 +48,20 @@ Order processing is built using an event-driven architecture. The Order Service 
 ```bash
                  Client
                    │
-            API Gateway
+        API Gateway (Load Balancer..)
                    │
-              Order Service
+          Lambda (Order Service)
                    │
-               DynamoDB
+           DynamoDB (Database)
                    │
-             EventBridge Bus
+            EventBridge Bus
                    │
-   ┌─────────────┼──────────────┐
-   │               │                │
-Payment Service  Inventory       Fraud
+   ┌────────────────────────────┐
+   │               │                | Payment         Inventory          Fraud
    │               │                │
 PaymentCompleted InventoryReserved FraudCheck
-          │              │
-          └──────┬────┘
-                  │
-            Shipping Service
-                  │
-             ShipmentCreated
-                  │
+                   │
+            ShipmentCreated
+                   │
           Notification Service
-                  │
-             Email / SMS
 ```
