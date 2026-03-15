@@ -61,7 +61,7 @@ Payment Service         Inventory       Fraud
    │                       │                │
 PaymentCompleted   InventoryReserved           FraudCheck
           │                │
-          └────────────┬─────────────┘
+          └─────────────────┬─────────────┘
                            │
                     Shipping Service
                            │
