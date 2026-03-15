@@ -7,6 +7,7 @@
 
 - [About](#about)
 - [Typical AWS Event-Driven Architecture](#typical-aws-event-driven-architecture)
+- [Order Processing at Scale](#order-processing-at-scale)
 
 ---
 
@@ -18,14 +19,56 @@ It is suitable to decouple microservices (see [Choreography-based Saga](https://
 
 # Typical AWS Event-Driven Architecture
 
+In AWS, event-driven systems are typically built using Lambda services as event producers and consumers, EventBridge as the event bus, SNS for notifications, and SQS for asynchronous processing. A microservice publishes an event such as `OrderCreated`, which multiple downstream services like payment, inventory, and shipping can consume independently.
+
 ```bash
 User Action
     ↓
 API Gateway
     ↓
-Lambda (producer)
+Lambda (Producer)
     ↓
-EventBridge
+DynamoDB (Database)
+    ↓
+EventBridge (Event Bus)
     ↓
 Multiple services react
+---------------------------------------
+| Payment | Inventory | Shipping |
+---------------------------------------
+    ↓
+SNS (Notification Service)
+```
+
+# Order Processing at Scale
+
+Order processing is built using an event-driven architecture. The Order Service stores the order and emits an OrderCreated event through EventBridge. Downstream services like Payment, Inventory, Fraud Detection, and Shipping consume events asynchronously through queues. Each service updates its own database and publishes new events such as PaymentCompleted or ShipmentCreated. SQS provides buffering and retries, DynamoDB stores order state, and SNS handles notifications. This architecture allows independent scaling, fault isolation, and high throughput.
+
+
+```bash
+                 Client
+                   │
+            API Gateway
+                   │
+              Order Service
+                   │
+               DynamoDB
+                   │
+             EventBridge Bus
+                   │
+   ┌─────────────┼──────────────┐
+   │               │                │
+Payment Service  Inventory       Fraud
+   │               │                │
+PaymentCompleted InventoryReserved FraudCheck
+          │              │
+          └──────┬────┘
+                  │
+            Shipping Service
+                  │
+             ShipmentCreated
+                  │
+          Notification Service
+                  │
+             Email / SMS
 ```
