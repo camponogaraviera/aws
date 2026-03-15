@@ -59,9 +59,9 @@ Order processing is built using an event-driven architecture. The Order Service 
    │                       │                │
 Payment Service         Inventory       Fraud
    │                       │                │
-PaymentCompleted   InventoryReserved        FraudCheck
+PaymentCompleted   InventoryReserved           FraudCheck
           │                │
-          └─────────────┬─────────────┘
+          └────────────┬─────────────┘
                            │
                     Shipping Service
                            │
