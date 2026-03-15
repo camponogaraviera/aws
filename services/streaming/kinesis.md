@@ -20,5 +20,5 @@
 Although [Kinesis Video Streams](https://aws.amazon.com/en/kinesis/video-streams/) supports playback for live and on-demand viewing, it is primarily built for analytics and processing rather than video content delivery at scale. If one wants to build a live streaming service, one should use the following pipeline:
 
 ```bash
-Raw Video Source → MediaLive (to encode/compress) → MediaPackage (to convert to a streaming format) → CloudFront (content delivery network) → End Users
+Raw Video Source -> MediaLive (to encode/compress) -> MediaPackage (to convert to a streaming format) -> CloudFront (content delivery network) -> End Users
 ```
