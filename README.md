@@ -1,3 +1,16 @@
+<!-- Shields -->
+
+[![Contributions](https://img.shields.io/badge/contributions-welcome-orange?style=flat-square)](https://github.com/camponogaraviera/aws/pulls)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/camponogaraviera/aws/graphs/commit-activity)
+
+<!-- Dependencies -->
+
+<a href="https://aws.amazon.com/" target="_blank" rel="noopener noreferrer"><img src="https://github.com/camponogaraviera/logos/blob/main/assets/aws.png" width="50"></a>
+<br>
+<br>
+
+<!-- Title -->
+
 <div align='center'>
   <h1> Amazon Web Services Roadmap </h1>
   <h2> + Technical Interview </h2>
